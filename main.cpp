@@ -1,29 +1,27 @@
 #include <iostream>
 #include <cmath>
+#include <thread>
+#include <chrono>
 
 /**
- * THE DEADZONE PATCH (Cyber-Physical Calibration Layer)
- * Logic: We ignore all input within a small "radius" around the center.
- * This prevents "mechanical noise" (stick drift) from being read as intent.
+ * DEADZONE-PATCH (Firmware Level)
+ * Cyber-Physical Calibration Layer
  */
 
 struct StickInput {
-    float x; // Horizontal Axis (-1.0 to 1.0)
-    float y; // Vertical Axis   (-1.0 to 1.0)
+    float x; 
+    float y; 
 };
 
 StickInput applyDeadzone(float rawX, float rawY, float deadzoneThreshold) {
-    // 1. Calculate the Magnitude (Distance from center using Pythagorean theorem)
     float magnitude = std::sqrt(rawX * rawX + rawY * rawY);
 
-    // 2. Safety Lock & Logic Gate
-    // If magnitude is 0, or falls within the deadzone threshold, force zero state.
+    // Failsafe & Logic Gate
     if (magnitude <= deadzoneThreshold || magnitude == 0.0f) {
         return {0.0f, 0.0f};
     }
 
-    // 3. Normalized Output
-    // Scales the remaining input so it starts at 0.0 right after the deadzone.
+    // Normalized Output
     float scalingFactor = (magnitude - deadzoneThreshold) / (1.0f - deadzoneThreshold);
     
     return {
@@ -33,20 +31,42 @@ StickInput applyDeadzone(float rawX, float rawY, float deadzoneThreshold) {
 }
 
 int main() {
-    // Example: A robotics sensor or thumbstick sending ghost signals
-    float driftX = 0.08f; 
-    float driftY = 0.05f;
-    float deadzone = 0.15f; // We ignore anything under 15% movement
-
-    StickInput result = applyDeadzone(driftX, driftY, deadzone);
-
-    std::cout << "--- Cyber-Physical Sensor Calibration ---" << std::endl;
-    std::cout << "Raw Input (Drift): X=" << driftX << ", Y=" << driftY << std::endl;
-    std::cout << "Filtered Output:   X=" << result.x << ", Y=" << result.y << std::endl;
+    std::cout << "--- Initializing Deadzone-Patch Firmware ---" << std::endl;
+    float deadzone = 0.12f; // 12% Hardware tolerance threshold
     
-    if (result.x == 0.0f && result.y == 0.0f) {
-        std::cout << "STATUS: Mechanical hysteresis neutralized successfully." << std::endl;
+    // Simulating a stream of hardware inputs (e.g., polling a sensor)
+    StickInput simulatedHardwareBuffer[] = {
+        {0.08f, 0.05f},   // Drift (Should be neutralized)
+        {0.11f, -0.02f},  // Drift (Should be neutralized)
+        {0.45f, 0.60f},   // Actual Intentional Movement
+        {-0.90f, 0.10f}   // Actual Intentional Movement
+    };
+
+    int bufferSize = sizeof(simulatedHardwareBuffer) / sizeof(simulatedHardwareBuffer[0]);
+
+    std::cout << "[SYSTEM] Threshold set to: " << (deadzone * 100) << "%" << std::endl;
+    std::cout << "--------------------------------------------" << std::endl;
+
+    for (int i = 0; i < bufferSize; i++) {
+        float rx = simulatedHardwareBuffer[i].x;
+        float ry = simulatedHardwareBuffer[i].y;
+        
+        StickInput filtered = applyDeadzone(rx, ry, deadzone);
+
+        std::cout << "Raw Sensor [X: " << rx << ", Y: " << ry << "] ";
+        
+        if (filtered.x == 0.0f && filtered.y == 0.0f) {
+             std::cout << "-> NOISE FILTERED (Output: 0, 0)\n";
+        } else {
+             std::cout << "-> SIGNAL PASSED  (Output: X:" << filtered.x << " Y:" << filtered.y << ")\n";
+        }
+
+        // Simulating the clock cycle delay of an embedded system
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
     }
+
+    std::cout << "--------------------------------------------" << std::endl;
+    std::cout << "[SYSTEM] Buffer reading complete." << std::endl;
 
     return 0;
 }
