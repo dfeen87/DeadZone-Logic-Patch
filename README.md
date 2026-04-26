@@ -29,6 +29,17 @@ float threshold = 0.12f;
 StickInput signal = applyDeadzone(rawX, rawY, threshold);
 ```
 
+### Flashing to a Physical Device
+It is important to note that the `.ino` sketch file in the `deadzone_patch` directory does **not** automatically sync to a connected physical device. You must compile and upload (flash) it to your microcontroller (e.g., Arduino Pro Micro, Teensy).
+
+You can flash the device using:
+1. **Arduino IDE**: Open `deadzone_patch/deadzone_patch.ino`, select your board and port, and click "Upload".
+2. **Command Line (`arduino-cli`)**: We have provided a `flash.sh` script to automate compiling and uploading if you have `arduino-cli` installed.
+
+```bash
+./flash.sh
+```
+
 ## 📜 Acknowledgements
 Developed at the intersection of systems architecture and physical engineering.
 

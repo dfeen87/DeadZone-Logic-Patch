@@ -21,8 +21,14 @@ StickInput applyDeadzone(float rawX, float rawY, float deadzoneThreshold) {
         return {0.0f, 0.0f};
     }
 
+    // Cap magnitude to 1.0 (circular bounds)
+    float cappedMagnitude = magnitude;
+    if (cappedMagnitude > 1.0f) {
+        cappedMagnitude = 1.0f;
+    }
+
     // Normalized Output
-    float scalingFactor = (magnitude - deadzoneThreshold) / (1.0f - deadzoneThreshold);
+    float scalingFactor = (cappedMagnitude - deadzoneThreshold) / (1.0f - deadzoneThreshold);
     
     return {
         (rawX / magnitude) * scalingFactor,
@@ -39,7 +45,8 @@ int main() {
         {0.08f, 0.05f},   // Drift (Should be neutralized)
         {0.11f, -0.02f},  // Drift (Should be neutralized)
         {0.45f, 0.60f},   // Actual Intentional Movement
-        {-0.90f, 0.10f}   // Actual Intentional Movement
+        {-0.90f, 0.10f},  // Actual Intentional Movement
+        {1.00f, 1.00f}    // Corner test (Magnitude > 1.0)
     };
 
     int bufferSize = sizeof(simulatedHardwareBuffer) / sizeof(simulatedHardwareBuffer[0]);

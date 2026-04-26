@@ -37,7 +37,13 @@ StickInput applyDeadzone(float rawX, float rawY, float threshold) {
         return {0.0f, 0.0f};
     }
 
-    float scalingFactor = (magnitude - threshold) / (1.0f - threshold);
+    // Cap magnitude to 1.0 (circular bounds)
+    float cappedMagnitude = magnitude;
+    if (cappedMagnitude > 1.0f) {
+        cappedMagnitude = 1.0f;
+    }
+
+    float scalingFactor = (cappedMagnitude - threshold) / (1.0f - threshold);
     
     return {
         (rawX / magnitude) * scalingFactor,
