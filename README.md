@@ -39,4 +39,3 @@ Developed at the intersection of systems architecture and physical engineering.
 This project is part of the **"Pact for AI for Good"**—leveraging software to extend the life of hardware and ensure precision in human-machine interfaces.
 
 ---
-**Systems Architect | Pharma Science Student | AI for Good**
