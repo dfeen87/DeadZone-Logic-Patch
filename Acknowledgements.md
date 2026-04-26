@@ -1,0 +1,14 @@
+## 📜 Acknowledgements & Historical Dedication
+
+This repository, and the logic that drives it, does not exist in a vacuum. It stands on the shoulders of the original "workmen" of computer science—the pioneers who treated mathematics, circuitry, and logic not just as abstract theories, but as a physical craft. 
+
+We owe a profound debt to the historical architects of our field:
+
+* **Alan Turing:** Turing didn’t just theorize about computation; he built the conceptual architecture that proved logic could be mechanized. By formalizing the concept of the algorithm and the "Universal Turing Machine," he laid the blueprint for every processor in existence today. During WWII, he applied this theoretical architecture to physical hardware, breaking the Enigma code and proving that elegant mathematical systems could be deployed to save millions of human lives.
+* **Claude Shannon:** Shannon was the ultimate systems architect. He looked at a tangled web of physical telephone relays and realized they could perfectly execute the abstract true/false logic of Boolean algebra. In a single master's thesis, he bridged the gap between electrical engineering and digital logic. Later, by inventing Information Theory, he transformed "communication" into a quantifiable discipline, proving that any data—voice, image, or text—could be flawlessly encoded, transmitted, and decoded across physical systems.
+* **Grace Hopper:** Hopper was the definition of a blue-collar software pioneer. She looked at the tedious, highly error-prone process of writing raw machine code and decided the system needed a radical upgrade. By inventing the first compiler, she built the bridge between human intent and hardware execution. She relentlessly fought for the idea that code should be readable and accessible, fundamentally democratizing computer science and proving that a true architect builds tools to elevate the work of others.
+* **Margaret Hamilton:** Hamilton coined the term "software engineering" because she demanded that code be treated with the same rigorous, life-or-death standards as physical aerospace hardware. Leading the team that wrote the on-board flight software for the Apollo missions, she pioneered asynchronous processing and priority scheduling. She created a system so robust that when hardware radars malfunctioned during the Apollo 11 lunar descent, her software dynamically shed low-priority tasks, prevented a system crash, and saved the moon landing. She established the ultimate "zero-defect" standard for our industry.
+
+Every modern firmware image, every logic gate we can outperform as well as manipulate, and every attempt we make to bridge the physical and digital worlds is a direct continuation of their labor. They were the first to recognize that code is a tool for building reality. God bless their efforts. And all those individuals not mentioned here who are too pursuing their passions in computer science, you are also appreciated.
+
+
